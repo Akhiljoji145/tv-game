@@ -7,6 +7,7 @@ import android.view.View
 import android.view.WindowManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.webkit.JavascriptInterface
 
 class MainActivity : Activity() {
     private lateinit var web: WebView
@@ -27,6 +28,9 @@ class MainActivity : Activity() {
         )
 
         web = WebView(this).apply {
+            addJavascriptInterface(object {
+                @JavascriptInterface fun exitApp() { runOnUiThread { finish() } }
+            }, "AndroidTV")
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
             isFocusable = true
